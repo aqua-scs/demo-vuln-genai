@@ -18,6 +18,8 @@ jobs:
       AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
       GITHUB_TOKEN: ${{secrets.TOKEN}}
       TRIVY_RUN_AS_PLUGIN: 'aqua'
+      AQUA_URL: https://api.asia-1.supply-chain.cloud.aquasec.com
+      CSPM_URL: https://asia-1.api.cloudsploit.com
       
     permissions:
         id-token: write
@@ -39,7 +41,7 @@ jobs:
           args: trivy -d fs --scanners config,vuln,secret . --sast
           # To customize which severities to scan for, add the following flag: --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
           # To enable SAST scanning, add: --sast
-          # To enable npm/dotnet non-lock file scanning, add: --package-json / --dotnet-proj  
+          # To enable npm/dotnet non-lock file scanning, add: --package-json / --dotnet-proj   
       - name: Build image locally
         run: |
           docker build -t "$REGISTRY/$REPOSITORY:$IMAGE_TAG" .
