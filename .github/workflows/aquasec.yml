@@ -16,7 +16,7 @@ jobs:
       IMAGE_TAG: ${{ github.sha }}
       AQUA_KEY: ${{ secrets.AQUA_KEY }}
       AQUA_SECRET: ${{ secrets.AQUA_SECRET }}
-      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      GITHUB_TOKEN: ${{secrets.TOKEN}}
       TRIVY_RUN_AS_PLUGIN: 'aqua'
       
     permissions:
@@ -54,11 +54,11 @@ jobs:
           sh install.sh
           rm install.sh install.sh.checksum
           billy generate \
-              --access-token "GITHUB_TOKEN" \
+              --access-token "$GITHUB_TOKEN" \
               --aqua-key "$AQUA_KEY" \
               --aqua-secret "$AQUA_SECRET" \
               --artifact-path "$REGISTRY/$REPOSITORY:$IMAGE_TAG"
-      name: Login to Docker Hub
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: $DOCKER_USERNAME
