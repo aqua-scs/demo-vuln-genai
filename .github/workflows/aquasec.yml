@@ -62,7 +62,7 @@ jobs:
               --artifact-path "$REGISTRY/$REPOSITORY:$IMAGE_TAG"
       - name: Tag and push image
         run: |
-          echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+          echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
           docker tag $REGISTRY/$REPOSITORY:$IMAGE_TAG $REGISTRY/$REPOSITORY:latest
           docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
           docker push $REGISTRY/$REPOSITORY:latest
