@@ -47,6 +47,7 @@ jobs:
           docker build -t "$REGISTRY/$REPOSITORY:$IMAGE_TAG" .
       - name: Manifest Generation
         run: |
+          export BILLY_SERVER=https://billy.asia-1.codesec.aquasec.com
           curl -sLo install.sh download.codesec.aquasec.com/billy/install.sh
           curl -sLo install.sh.checksum https://github.com/argonsecurity/releases/releases/latest/download/install.sh.checksum
           if ! cat install.sh.checksum | shasum -a 256 ; then
@@ -59,6 +60,7 @@ jobs:
               --access-token "$GITHUB_TOKEN" \
               --aqua-key "$AQUA_KEY" \
               --aqua-secret "$AQUA_SECRET" \
+              --cspm-url "$CSPM_URL"\
               --artifact-path "$REGISTRY/$REPOSITORY:$IMAGE_TAG"
       - name: Tag and push image
         run: |
